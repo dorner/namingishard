@@ -1,0 +1,24 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: <%= ENV['DB_HOST'] || '127.0.0.1' %>
+  port: <%= ENV['DB_PORT'] || '5432' %>
+  # For details on connection pooling, see Rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: 10
+  reconnect: true
+
+development: &development
+  <<: *default
+  database: namingishard_development
+
+test:
+  <<: *development
+  database: namingishard_test
+
+production:
+  <<: *default
+  host: <%= ENV['DB_HOST'] %>
+  database: namingishard_production
+  username: namingishard
+  password: "<%= ENV['DB_PASSWORD'] %>"
