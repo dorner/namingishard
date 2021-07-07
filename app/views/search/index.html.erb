@@ -1,0 +1,18 @@
+<h2 class="ui header">Search Results For: <%= params[:word] %></h2>
+
+<% if @words.any? %>
+<div class="ui segment">
+  <% @words.each do |word| %>
+    <%= link_to word.word, word_path(word) %><br/>
+  <% end %>
+</div>
+<% else %>
+  <h3>Word not found. Add a new word?</h3>
+<% end %>
+
+<%= form_for '', url: words_path do %>
+  <div class="ui huge icon input">
+    <%= text_field_tag :word, params[:word], placeholder: 'Add New Word...' %>
+  </div>
+  <%= submit_tag 'Add', class: 'ui button secondary huge' %>
+<% end %>

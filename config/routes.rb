@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
 
   root 'home#index'
-
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  get 'search', to: 'search#index'
+  resources :words, only: [:show, :create] do
+    post :add_related_word, on: :member
+  end
+  resources :word_relations, only: [] do
+    post :vote, on: :member
+  end
 end

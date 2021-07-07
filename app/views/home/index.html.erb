@@ -1,1 +1,26 @@
-<h2>Welcome to Naming Is Hard</h2>
+<blockquote>
+  There are only two hard things in Computer Science: cache invalidation and naming things.
+<br/>  - Phil Karlton
+</blockquote>
+
+<p class="intro">
+  If you've been stuck thinking up yet another name for "factory" or "process", this is the site for you.
+  <br/>Suggest related words, and view and vote for other people's suggestions.
+</p>
+<%= form_for 'search', url: '/search', method: :get do %>
+<div class="ui massive icon input">
+  <%= text_field_tag :word, '', placeholder: 'Enter Search Term...' %>
+  <i class="search icon"></i>
+</div>
+<%= submit_tag 'Search', class: 'ui button primary massive' %>
+<% end %>
+
+<div class="ui divider section"></div>
+<br/>
+
+<%= form_for '', url: words_path do %>
+  <div class="ui huge icon input">
+    <%= text_field_tag :word, params[:word], placeholder: 'Add New Word...' %>
+  </div>
+  <%= submit_tag 'Add', class: 'ui button secondary huge' %>
+<% end %>

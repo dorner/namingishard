@@ -1,0 +1,28 @@
+<h2 class="ui header">Thesaurus Entry: <span class="main-entry"><%= @word.word %></span></h2>
+
+<div class="ui segment">
+  <% if @relations.any? %>
+
+    <% @relations.each do |rel| %>
+      <div class="ui segment word-entry<%= ' bad-word' if rel.total_votes.negative? %>"
+           data-controller="word" data-word-url-value="<%= vote_word_relation_path(rel) %>">
+        <%= link_to rel.word2.word, rel.word2 %>
+        <i class="icon arrow circle up green vote-icon" data-action="click->word#upvote"></i>
+        <div class="upvotes" data-word-target="upvotes"><%= rel.up_votes %></div>
+        <i class="icon arrow circle down red vote-icon" data-action="click->word#downvote"></i>
+        <div class="downvotes" data-word-target="downvotes"><%= rel.down_votes %></div>
+      </div>
+      <% end %>
+  <% else %>
+    <h3>No related words found. Add one?</h3>
+  <% end %>
+</div>
+<div class="ui segment word-suggestions">
+  Suggest a Related Word:
+  <%= form_for '', url: add_related_word_word_path(@word) do %>
+    <div class="ui huge icon input">
+      <%= text_field_tag :new_word, '', placeholder: 'Enter Related Word...' %>
+    </div>
+    <%= submit_tag 'Add', class: 'ui button primary huge' %>
+  <% end %>
+</div>

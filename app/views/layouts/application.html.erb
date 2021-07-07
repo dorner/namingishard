@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Sprightly</title>
+    <title>Naming Is Hard</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,6 +11,25 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="ui grid">
+      <div class="two wide column"></div>
+      <div class="fourteen wide column">
+        <div class="ui segment basic">
+          <h2 class="ui header"><%= link_to 'Welcome to Naming Is Hard', '/' %></h2>
+          <div class="ui divider section"></div>
+          <br/>
+
+          <% flash.each do |key, value| %>
+            <% css = key.to_s == 'notice' ?  'info' : 'negative' %>
+            <div class="ui message <%= css %>">
+              <i class="close icon"></i>
+              <p><%= value %></p>
+            </div>
+          <% end %>
+
+          <%= yield %>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

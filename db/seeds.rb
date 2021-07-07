@@ -5,3 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+word = Word.create!(word: 'job')
+
+WordRelation.add_relation(word, 'process')
+WordRelation.add_relation(word, 'work')

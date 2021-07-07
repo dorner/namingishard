@@ -4,7 +4,24 @@
 // that code so it'll be compiled.
 
 import Rails from "@rails/ujs"
-import Turbolinks from "turbolinks"
+import * as Turbo from "@hotwired/turbo";
+import $ from 'jquery'
+import { Application } from "stimulus"
+import { definitionsFromContext } from "stimulus/webpack-helpers"
+
+window.jQuery = window.$ = $; // for console access
+const application = Application.start()
+const context = require.context("../controllers", true, /\.js$/)
+application.load(definitionsFromContext(context))
+
+require('fomantic-ui-css/semantic.css');
+require('fomantic-ui-css/semantic.js');
 
 Rails.start()
-Turbolinks.start()
+
+// Turbo sometimes leaves buttons disabled after clicking + going back
+document.documentElement.addEventListener('turbo:load', () => {
+  document.querySelectorAll('.ui.button[disabled]').forEach((button) => {
+    button.disabled = false
+  })
+})
