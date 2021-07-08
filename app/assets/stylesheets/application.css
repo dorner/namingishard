@@ -44,5 +44,13 @@ blockquote {
 .intro {
     font-size: 16px;
     padding: 20px;
+}
 
+.inline-form {
+    display: inline;
+}
+
+.current-user {
+    padding-right: 10px;
+    font-size: 16px;
 }
