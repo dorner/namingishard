@@ -1,12 +1,20 @@
 class WordsController < ApplicationController
 
+  rescue_from ActiveRecord::RecordNotUnique do
+    redirect_back(fallback_location: '/', alert: 'The word already exists!')
+  end
+
   def find_word
     Word.find(params[:id])
   end
 
   def create
-    word = Word.create!(word: params[:word])
-    redirect_to word_path(word, notice: "Word #{params[:word]} created - add some related words!")
+    if ProfanityChecker.check(params[:word])
+      redirect_back(fallback_location: '/', alert: 'Your word was flagged by our profanity checker! Please try a different one.')
+    else
+      word = Word.create!(word: params[:word])
+      redirect_to word_path(word, notice: "Word #{params[:word]} created - add some related words!")
+    end
   end
 
   def show

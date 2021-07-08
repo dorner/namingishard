@@ -3,7 +3,15 @@
 <% if @words.any? %>
 <div class="ui segment">
   <% @words.each do |word| %>
-    <%= link_to word.word, word_path(word) %><br/>
+    <div data-controller="tags" data-tags-word-value="<%= word.word %>"></div>
+    <span class="ui text large"><%= link_to word.word, word_path(word) %></span>
+    <select class="ui dropdown search selection allowAdditions word-tags" multiple>
+      <option value="">Add Tags...</option>
+      <% word.tags.each do |tag| %>
+        <option selected value="<%= tag.tag %>"><%= tag.tag %></option>
+      <% end %>
+    </select>
+    </div>
   <% end %>
 </div>
 <% else %>
