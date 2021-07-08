@@ -25,3 +25,5 @@ document.documentElement.addEventListener('turbo:load', () => {
     button.disabled = false
   })
 })
+
+console.log("Welcome to Webpacker!")
