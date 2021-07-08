@@ -11,7 +11,7 @@ class WordsController < ApplicationController
 
   def show
     @word = find_word
-    @relations = @word.ordered_word_relations
+    @relations = WordRelation.ordered_word_relations(@word)
   end
 
   def add_related_word

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_08_135059) do
+ActiveRecord::Schema.define(version: 2021_07_08_145728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -31,11 +31,19 @@ ActiveRecord::Schema.define(version: 2021_07_08_135059) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "votes", force: :cascade do |t|
+    t.integer "word_relation_id"
+    t.integer "user_id"
+    t.integer "score"
+    t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
+    t.index ["user_id"], name: "index_votes_on_user_id"
+    t.index ["word_relation_id"], name: "index_votes_on_word_relation_id"
+  end
+
   create_table "word_relations", force: :cascade do |t|
     t.string "word1", null: false
     t.string "word2", null: false
-    t.integer "up_votes", default: 0, null: false
-    t.integer "down_votes", default: 0, null: false
     t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
     t.index ["word1", "word2"], name: "index_word_relations_on_word1_and_word2", unique: true
@@ -49,6 +57,8 @@ ActiveRecord::Schema.define(version: 2021_07_08_135059) do
     t.index ["word"], name: "word_idx", opclass: :gin_trgm_ops, using: :gin
   end
 
+  add_foreign_key "votes", "users"
+  add_foreign_key "votes", "word_relations"
   add_foreign_key "word_relations", "words", column: "word1", primary_key: "word", on_delete: :cascade
   add_foreign_key "word_relations", "words", column: "word2", primary_key: "word", on_delete: :cascade
 end
