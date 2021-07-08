@@ -20,7 +20,7 @@
 
 <%= form_for '', url: words_path do %>
   <div class="ui huge icon input">
-    <%= text_field_tag :word, params[:word], placeholder: 'Add New Word...' %>
+    <%= text_field_tag :word, params[:word], placeholder: 'Add New Word...', disabled: !user_signed_in? %>
   </div>
-  <%= submit_tag 'Add', class: 'ui button secondary huge' %>
+  <%= submit_tag 'Add', class: "ui button secondary huge#{ ' disabled' unless user_signed_in? }" %>
 <% end %>

@@ -5,7 +5,7 @@
   <% @words.each do |word| %>
     <div data-controller="tags" data-tags-word-value="<%= word.word %>"></div>
     <span class="ui text large"><%= link_to word.word, word_path(word) %></span>
-    <select class="ui dropdown search selection allowAdditions word-tags" multiple>
+    <select class="ui dropdown search selection allowAdditions word-tags" multiple<%= ' disabled' unless user_signed_in? %>>
       <option value="">Add Tags...</option>
       <% word.tags.each do |tag| %>
         <option selected value="<%= tag.tag %>"><%= tag.tag %></option>
@@ -20,7 +20,7 @@
 
 <%= form_for '', url: words_path do %>
   <div class="ui huge icon input">
-    <%= text_field_tag :word, params[:word], placeholder: 'Add New Word...' %>
+    <%= text_field_tag :word, params[:word], placeholder: 'Add New Word...', disabled: !user_signed_in? %>
   </div>
-  <%= submit_tag 'Add', class: 'ui button secondary huge' %>
+  <%= submit_tag 'Add', class: "ui button secondary huge#{ ' disabled' unless user_signed_in? }" %>
 <% end %>

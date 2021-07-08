@@ -2,9 +2,9 @@
 
 <div class="ui segment">
   <%= form_for @word do |f| %>
-    <%= f.text_area :description, class: 'description-text-area' %>
+    <%= f.text_area :description, class: 'description-text-area', disabled: !user_signed_in?  %>
     <br/>
-    <%= f.submit 'Save description', class: 'ui button primary' %>
+    <%= f.submit 'Save description', class: "ui button primary#{ ' disabled' unless user_signed_in?}" %>
   <% end %>
 </div>
 
@@ -26,7 +26,7 @@
                         }
         %> (<span data-word-target="count"><%= rel.vote_count %></span>)
 
-        <select class="ui dropdown search selection allowAdditions word-tags" multiple>
+        <select class="ui dropdown search selection allowAdditions word-tags" multiple<%= ' disabled' unless user_signed_in? %>>
           <option value="">Add Tags...</option>
           <% rel.other_word(@word).tags.each do |tag| %>
             <option selected value="<%= tag.tag %>"><%= tag.tag %></option>
@@ -42,8 +42,8 @@
   Suggest a Related Word:
   <%= form_for '', url: add_related_word_word_path(@word) do %>
     <div class="ui huge icon input">
-      <%= text_field_tag :new_word, '', placeholder: 'Enter Related Word...' %>
+      <%= text_field_tag :new_word, '', placeholder: 'Enter Related Word...', disabled: !user_signed_in? %>
     </div>
-    <%= submit_tag 'Add', class: 'ui button primary huge' %>
+    <%= submit_tag 'Add', class: "ui button primary huge #{ ' disabled' unless user_signed_in? }" %>
   <% end %>
 </div>
