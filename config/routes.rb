@@ -14,10 +14,13 @@ Rails.application.routes.draw do
 
   root 'home#index'
   get 'search', to: 'search#index'
-  resources :words, only: [:show, :create] do
+  resources :words, only: [:show, :create, :update] do
     post :add_related_word, on: :member
   end
   resources :word_relations, only: [] do
     post :vote, on: :member
+  end
+  resources :tags, only: [:create] do
+    post :delete_tag, on: :collection
   end
 end

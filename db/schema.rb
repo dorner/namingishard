@@ -10,11 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_08_145728) do
+ActiveRecord::Schema.define(version: 2021_07_08_191627) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
+
+  create_table "tags", force: :cascade do |t|
+    t.string "word", null: false
+    t.string "tag", null: false
+    t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
+    t.index ["tag"], name: "index_tags_on_tag"
+    t.index ["word", "tag"], name: "index_tags_on_word_and_tag", unique: true
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -53,10 +62,12 @@ ActiveRecord::Schema.define(version: 2021_07_08_145728) do
     t.string "word", null: false
     t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
+    t.string "description", limit: 2048
     t.index ["word"], name: "index_words_on_word", unique: true
     t.index ["word"], name: "word_idx", opclass: :gin_trgm_ops, using: :gin
   end
 
+  add_foreign_key "tags", "words", column: "word", primary_key: "word", on_delete: :cascade
   add_foreign_key "votes", "users"
   add_foreign_key "votes", "word_relations"
   add_foreign_key "word_relations", "words", column: "word1", primary_key: "word", on_delete: :cascade

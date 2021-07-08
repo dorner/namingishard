@@ -54,3 +54,9 @@ blockquote {
     padding-right: 10px;
     font-size: 16px;
 }
+
+.description-text-area {
+    height: 80px;
+    width: 80%;
+    margin-bottom: 5px;
+}
