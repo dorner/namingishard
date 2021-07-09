@@ -3,10 +3,11 @@ class WordRelation < ApplicationRecord
   belongs_to :word2, class_name: 'Word', primary_key: :word, foreign_key: :word2
   has_many :votes, dependent: :delete_all
 
-  # @param word [Word]
+  # @param words [Word|Array<Word>]
   # @return [Word]
-  def other_word(word)
-    self.word1 == word ? self.word2 : self.word1
+  def other_word(words)
+    words = Array.wrap(words)
+    words.include?(self.word1) ?  self.word2 : self.word1
   end
 
   # @param word [Word]
@@ -39,6 +40,19 @@ class WordRelation < ApplicationRecord
       order by score desc, count(votes.id) desc
     SQL
     WordRelation.find_by_sql([sql, word.word, word.word])
+  end
+
+  def self.second_order_relations(words, word)
+    sql = <<-SQL
+      select word_relations.*, (sum(votes.score) + 25.0) / (count(votes.id) + 20.0) as score
+          from word_relations
+          left join votes on votes.word_relation_id = word_relations.id
+          where (word_relations.word1 IN (?) OR word_relations.word2 IN (?))
+          AND word_relations.word1 != ? AND word_relations.word2 != ?
+      group by word_relations.id
+      order by score desc, count(votes.id) desc
+    SQL
+    WordRelation.find_by_sql([sql, words.map(&:word), words.map(&:word), word.word, word.word])
   end
 
 

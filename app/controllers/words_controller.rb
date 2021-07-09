@@ -20,6 +20,13 @@ class WordsController < ApplicationController
   def show
     @word = find_word
     @relations = WordRelation.ordered_word_relations(@word)
+    @secondary_relations = if @relations.any?
+                             WordRelation.second_order_relations(
+                               @relations.map { |r| r.other_word(@word)}, @word
+                             )
+                           else
+                             []
+                           end
   end
 
   def add_related_word
