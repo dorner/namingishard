@@ -35,16 +35,22 @@
       </div>
       <% end %>
 
-    <% first_order_relations = @relations.map { |r| r.other_word(@word)} %>
-    <% @secondary_relations.each do |rel| %>
-      <% word = rel.other_word(first_order_relations) %>
-      <div class="ui segment word-entry">
-        <%= link_to word.word, word %>
-        <%= button_to 'Add as Direct Relation', add_related_word_word_path(@word, new_word: word),
-                      class: 'button ui secondary small', style: 'margin-left: 10px;', form_class: 'inline-form'
-        %>
-      </div>
-      <% end %>
+    <% if @secondary_relations.any? %>
+
+      <div class="ui divider section"></div>
+      <h4>More Related Words</h4>
+      
+      <% first_order_relations = @relations.map { |r| r.other_word(@word)} %>
+      <% @secondary_relations.each do |rel| %>
+        <% word = rel.other_word(first_order_relations) %>
+        <div class="ui segment word-entry">
+          <%= link_to word.word, word %>
+          <%= button_to 'Add as Direct Relation', add_related_word_word_path(@word, new_word: word),
+                        class: 'button ui secondary small', style: 'margin-left: 10px;', form_class: 'inline-form'
+          %>
+        </div>
+        <% end %>
+    <% end %>
   <% else %>
     <h3>No related words found. Add one?</h3>
   <% end %>
