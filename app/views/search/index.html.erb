@@ -15,8 +15,11 @@
   <% end %>
 </div>
 <% else %>
-  <h3>Word not found. Add a new word?</h3>
+  <h3>Word not found. <%= 'Add a new word?' if user_signed_in? %></h3>
 <% end %>
+
+<div class="ui divider section"></div>
+<h3>Add a New Word</h3>
 
 <%= form_for '', url: words_path do %>
   <div class="ui huge icon input">
