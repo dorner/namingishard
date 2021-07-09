@@ -15,8 +15,21 @@
     <div class="ui inverted vertical segment">
       <div class="ui grid">
         <div class="two wide column"></div>
-        <div class="eight wide column">
+        <div class="three wide column">
           <%= link_to 'Naming Is Hard', '/', class: 'ui header inverted huge' %>
+        </div>
+        <div class="five wide column">
+          <% unless params[:controller] == 'home' %>
+            <%= form_for 'search', url: '/search', method: :get do %>
+            <div class="ui input">
+              <%= text_field_tag :word, '' %>
+            </div>
+            <%= button_tag class: 'ui button primary' do %>
+              <i class="search icon"></i>
+              Search
+            <% end %>
+          <% end %>
+        <% end %>
         </div>
         <div class="five wide column right aligned">
           <% if user_signed_in? %>

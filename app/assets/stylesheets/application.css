@@ -64,3 +64,10 @@ blockquote {
 .word-tags {
     margin-left: 5px;
 }
+
+.main-entry {
+    color: blue;
+    font-weight: bold;
+    font-size: 30px;
+    padding-left: 10px;
+}
