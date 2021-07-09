@@ -1,7 +1,8 @@
 class WordRelationsController < ApplicationController
   def vote
     rel = WordRelation.find(params[:id])
-    vote = Vote.find_or_initialize_by(word_relation_id: rel.id, user_id: current_user.id)
+    vote = Vote.find_or_initialize_by(word_relation_id: rel.id,
+                                      user_id: current_or_guest_user.id)
     vote.score = params[:score]
     vote.save!
     rel.reload

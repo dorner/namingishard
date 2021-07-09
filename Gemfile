@@ -24,6 +24,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'httparty'
 
 gem 'devise'
+gem 'devise-guests'
 gem 'omniauth-github'
 gem "omniauth-rails_csrf_protection"
 

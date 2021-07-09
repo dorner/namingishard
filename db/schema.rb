@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_08_191627) do
+ActiveRecord::Schema.define(version: 2021_07_09_131643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2021_07_08_191627) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "provider"
     t.string "uid"
+    t.boolean "guest", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

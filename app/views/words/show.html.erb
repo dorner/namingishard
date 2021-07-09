@@ -12,17 +12,17 @@
   <% if @relations.any? %>
 
     <% @relations.each do |rel| %>
-      <div class="ui segment word-entry<%= ' bad-word' if rel.vote_avg && rel.vote_avg < 2 %>"
+      <div class="ui segment word-entry"
            data-controller="word tags" data-tags-word-value="<%= rel.other_word(@word).word %>"
            data-word-url-value="<%= vote_word_relation_path(rel) %>">
-        <%= link_to rel.other_word(@word).word, rel.other_word(@word) %>
+        <%= link_to rel.other_word(@word).word, rel.other_word(@word),
+                    class: ('bad-word' if rel.vote_avg && rel.vote_avg < 2) %>
         <%= content_tag :div, '',
                         class: 'ui yellow rating',
-                        disabled: !user_signed_in?,
                         data: {
                           'word-target': 'rating',
                           rating: rel.vote_avg,
-                          content: user_signed_in? ? 'Click to add or change your vote!' : ''
+                          content: 'How closely related are these words?'
                         }
         %> (<span data-word-target="count"><%= rel.vote_count %></span>)
 
