@@ -8,9 +8,15 @@
   <br/>Suggest related words, and view and vote for other people's suggestions.
 </p>
 <%= form_for 'search', url: '/search', method: :get do %>
-<div class="ui massive icon input">
-  <%= text_field_tag :word, '', placeholder: 'Enter Search Term...' %>
-  <i class="search icon"></i>
-</div>
-<%= submit_tag 'Search', class: 'ui button primary massive' %>
+  <div class="ui page grid">
+    <div class="column two wide"></div>
+     <div class="column twelve wide">
+      <div class="ui massive icon input">
+        <%= text_field_tag :word, '', placeholder: 'Enter Search Term...' %>
+        <i class="search icon"></i>
+      </div>
+      <%= submit_tag 'Search', class: 'ui button primary massive' %>
+   </div>
+  </div>
+  </div>
 <% end %>
